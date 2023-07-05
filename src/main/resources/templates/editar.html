@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Venta</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">    
+    <style>
+        .header {
+            background-color: blue;
+            padding: 10px;
+        }
+
+        .navbar-brand {
+            color: white;
+        }
+
+        .navbar-nav .nav-link {
+            color: white;
+        }
+        .main-container {
+          margin-top: 30px;
+        }
+        .table-container {
+          max-width: 800px;
+          margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container">
+                <a class="navbar-brand" href="#">Jacke Nail</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="crud.html">Ventas</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Usuarios</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Productos</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Compras</a>
+                        </li>
+                    </ul>
+                    <div class="dropdown">
+                        <button class="btn btn-outline-light dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Configuración
+                        </button>
+                        
+                        <div class="dropdown-menu text-center" aria-labelledby="dropdownMenuButton">
+                          <a class="dropdown-item" href="#">
+                            <img src="descargar.jpg" alt="60" width="60">
+                          </a>
+                          <a class="dropdown-item" href="#">usuario@gmail.com</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" href="#">Cerrar sesión</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+<div class="container main-container">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card">
+                <form th:action="@{/ventas/guardarVenta}" method="post" id="myForm" onsubmit="return validarFormulario()">
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Datos del Empleado Actualizar</label>
+                        </div>
+                        <div class="form-group d-flex">
+                            <div class="col-sm-5 d-flex">
+                                <input type="text" class="form-control" name="idVentas" th:value="${venta.idVentas}" readonly>
+                            </div>
+                            <div class="col-sm-7">
+                                <input type="text" th:value="${venta.nombreEmpleado}" class="form-control" name="nombreEmpleado" id="nombreEmpleado">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Datos productos</label>
+                        </div>
+                        <div class="form-group d-flex">
+                            <div class="col-sm-5 d-flex">
+                                <input type="text" class="form-control" th:value="${venta.nombreProducto}" name="nombreProducto" id="nombreProducto">
+                            </div>
+                            <div class="col-sm-5">
+                                <input type="date" th:value="${venta.fechaVentas}" class="form-control" name="fechaVentas" id="fechaVentas">
+                            </div>
+                        </div>
+                        <div class="form-group d-flex">
+                            <div class="col-sm-4 d-flex">
+                                <input type="text" class="form-control" th:value="${venta.monto}" name="monto" id="monto">
+                            </div>
+                            <div class="col-sm-3 d-flex">
+                                <input type="number" class="form-control" th:value="${venta.numeroSerie}" name="numeroSerie" id="numeroSerie">
+                            </div>
+                            <div class="col-sm-5">
+                                <select class="form-control" name="estado" th:value="${venta.estado}" id="estado">
+                                    <option value="Stock">STOCK</option>
+                                    <option value="Continua">CONTINUA</option>
+                                    <option value="Proceso">PROCESO</option>
+                                    <!-- Agrega más opciones según tus necesidades -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-outline-info btn-with-icon move-forward" name="accion">
+                                <i class="fas fa-shopping-cart"></i> actualizar
+                            </button>     
+                                                  
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function validarFormulario() {
+        var nombreEmpleado = document.getElementById("nombreEmpleado").value;
+        var nombreProducto = document.getElementById("nombreProducto").value;
+        var fechaVentas = document.getElementById("fechaVentas").value;
+        var monto = document.getElementById("monto").value;
+        var numeroSerie = document.getElementById("numeroSerie").value;
+        var estado = document.getElementById("estado").value;
+
+        if (nombreEmpleado === "" || nombreProducto === "" || fechaVentas === "" || monto === "" || numeroSerie === "" || estado === "") {
+            alert("Por favor, complete todos los campos obligatorios intente de nuevo.....");
+            return false;
+        }
+        
+        return true;
+    }
+</script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poZ5D6D6WTp2I/O4IyZCx3y4KfXn3vryRDmgZ7n8gFLbls7bXaG" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js" integrity="sha384-LDk5UYPNchQMXLzOwD+qb8l+OpO+6HJN5uWpxax4PO9ZxKk+toQTsQB/Vo0yUStx" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
